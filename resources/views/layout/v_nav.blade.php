@@ -18,6 +18,14 @@
             </a>
         </li>
         @endcan
+        @can('manage_karyawan')
+        <li class="nav-item ">
+            <a href="{{ route('karyawan.index') }}" class="nav-link {{ request()->is('karyawan*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-user-friends"></i>
+                <p>Karyawan</p>
+            </a>
+        </li>
+        @endcan
         @can('manage_barang')
         <li class="nav-item {{ request()->is('iphone*', 'samsung*', 'oppo*', 'vivo*', 'realme*', 'huawei*',
             'poco*', 'redmi*') ? 'menu-open' : '' }}">
@@ -92,20 +100,12 @@
             </ul>
         </li>
         @endcan
-        @can('manage_karyawan')
-        <li class="nav-item ">
-            <a href="{{ route('karyawan.index') }}" class="nav-link {{ request()->is('karyawan*') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-user-friends"></i>
-                <p>Karyawan</p>
-            </a>
-        </li>
-        @endcan
         @can('manage_users')
-        <li class="nav-header">USER CONTROLL</li>
+        <li class="nav-header">USER CONTROLLERS</li>
         <li class="nav-item">
             <a href="{{ route('users.index') }}" class="nav-link {{ request()->is('users*') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-user"></i>
-                <p>user</p>
+                <p>User</p>
             </a>
         </li>
         @endcan

@@ -3,12 +3,12 @@
 
 @section('content')
     <div class="card-body">
-      <p class="login-box-msg">Register a new membership</p>
+      <p class="login-box-msg">Register user baru</p>
 
       <form method="POST" action="{{ route('register') }}">
         @csrf
         <div class="input-group mb-3">
-          <input type="text" name="name" value="{{ old('name')}}" class="form-control @error('name') is-invalid @enderror" placeholder="Full name">
+          <input type="text" name="name" value="{{ old('name')}}" class="form-control @error('name') is-invalid @enderror" placeholder="Username">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -47,7 +47,7 @@
             @enderror
         </div>
         <div class="input-group mb-3">
-          <input type="password" name="password_confirmation" class="form-control" @error('password_confirmation') is-invalid @enderror placeholder="Retype password">
+          <input type="password" name="password_confirmation" class="form-control" @error('password_confirmation') is-invalid @enderror placeholder="Ulangi Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -59,7 +59,7 @@
         </div>
       </form>
 
-      <a href="{{ route('login') }}" class="text-center">I already have a membership</a>
+      <a href="{{ route('login') }}" class="text-center">Sudah punya akun, Login</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->

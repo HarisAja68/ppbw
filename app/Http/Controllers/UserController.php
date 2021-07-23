@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -25,13 +24,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        // return view('users.index',[
-        //     'users' => User::all(),
-        // ]);
-
         $keyword = $request->keyword;
-        $users = User::where('name', 'LIKE', '%'.$keyword.'%')
-            ->paginate (4);
+        $users = User::where('name', 'LIKE', '%'.$keyword.'%')->paginate (4);
         $users->appends($request->all());
         return view('users.index',compact( 'users', 'keyword' ));
     }
@@ -43,7 +37,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('users.create',[
+            'roles' => Role::all(),
+        ]);
     }
 
     /**
@@ -54,7 +50,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $request['role'] = Role::select('id', 'name')->find($request->role);
+        $request['role'] = Role::all()->find($request->role);
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -84,9 +80,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit',[
+    return view('users.edit',[
             'user' => $user,
-            'roleSelected' => $user->roles->first()
+            'roleSelected' => $user->roles->first()->all()
         ]);
     }
 

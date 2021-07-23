@@ -18,6 +18,13 @@
                     @endforeach
                 </div>
                 <div class="form-group">
+                    <label>Foto</label>
+                    <input type="file" name="foto" class="form-control">
+                    @foreach ($errors->get('foto') as $msg)
+                    <div class="alert alert-danger">{{$msg}}</div>
+                    @endforeach
+                </div>
+                <div class="form-group">
                     <label>Nama Karyawan</label>
                     <input name="nama" class="form-control" value="{{ old('nama')}}" placeholder="Silahkan isi nama Karyawan" >
                     @foreach ($errors->get('nama') as $msg)
@@ -38,19 +45,12 @@
                     <div class="alert alert-danger">{{$msg}}</div>
                     @endforeach
                 </div>
-                <div class="form-group">
-                    <label>Foto</label>
-                    <input type="file" name="foto" class="form-control"  value="{{ old('foto')}}">
-                    @foreach ($errors->get('foto') as $msg)
-                    <div class="alert alert-danger">{{$msg}}</div>
-                    @endforeach
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
-                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
             </div>
         </form>
+    </div>
 <div class="col-md-6">
 
 @endsection

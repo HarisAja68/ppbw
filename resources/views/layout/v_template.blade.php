@@ -14,7 +14,6 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('template')}}/dist/css/adminlte.min.css">
   <!-- Ionicons -->
-  <!-- select2 -->
   @stack('css')
 
 </head>
@@ -34,13 +33,13 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown user-menu">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <img src="{{ url(auth()->user()->foto ?? '') }}" class="user-image img-circle elevation-2" alt="User Image">
+                    <img src="{{ Auth::user()->foto }}" class="user-image img-circle elevation-2" alt="User Image">
                     <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                     <!-- User image -->
                     <li class="user-header bg-primary">
-                        <img src="{{ url(auth()->user()->foto ?? '') }}" class="img-circle elevation-2" alt="User Image">
+                        <img src="{{ Auth::user()->foto }}" class="img-circle elevation-2" alt="User Image">
                         <p>
                             {{ Auth::user()->name }} - {{ Auth::user()->email }}
                             <small>{{Auth::user()->roles->first()->name}}</small>
@@ -57,17 +56,6 @@
                     </li>
                 </ul>
             </li>
-
-            <li class="nav-item">
-                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                <i class="fas fa-expand-arrows-alt"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                <i class="fas fa-th-large"></i>
-                </a>
-            </li>
         </ul>
     </nav>
   <!-- /.navbar -->
@@ -76,7 +64,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
-      <img src="{{asset('template')}}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="images/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">Sinar Mentari</span>
     </a>
 
@@ -144,10 +132,7 @@
 <script src="{{asset('template')}}/dist/js/demo.js"></script>
 <!-- sweet alert2 -->
 <script src="{{asset('template')}}/plugins/sweetalert2/sweetalert2.all.min.js"></script>
-<!-- select2 -->
-@stack('js')
 
 </body>
 </html>
 @stack('scripts')
-

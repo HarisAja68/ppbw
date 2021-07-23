@@ -4,13 +4,21 @@
 @section('content')
 <div class="card card-info card-outline">
     <div class="card-header">
-        <form class="card-title" method="GET" action="{{ url('iphone')}}">
-            <input type="text" name="keyword" value="{{ $keyword}}" placeholder="Search" />
-            <button type="submit" class="btn btn-sm btn-outline-info"><i class="fas fa-search"></i> Search</button>
+        <form class="card-title" method="GET" action="{{ url('iphone')}}" enctype="multipart/form-data">
+            <div class="input-group">
+                <input type="search" class="form-control" name="keyword" value="{{ $keyword}}" placeholder="Search" />
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">
+                       <i class="fas fa-search"></i>
+                    </button>
+                 </div>
+            </div>
         </form>
         <div class="card-tools">
+            @can('barang_create')
             <a href="{{ url('iphone/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
             <a href="{{ url('cetak_iphone')}}" target="_blank" class="btn btn-success"><i class="fas fa-print"></i> Cetak Table</a>
+            @endcan
         </div>
     </div>
     <div class="card-body">
@@ -19,11 +27,11 @@
                 <tr>
                     <th>NO</th>
                     <th>Kode Barang</th>
-                    <th>Nama Handphone</th>
                     <th>Foto</th>
+                    <th>Nama Handphone</th>
                     <th>Harga</th>
                     <th>Stok</th>
-                    <th class="text-center" colspan="3">ACTION</th>
+                    <th class="text-center">ACTION</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,20 +39,23 @@
                     <tr>
                         <td>{{ (($key+1) + ($datas->currentPage() * $datas->perPage()) - $datas->perPage()) }}</td>
                         <td>{{$value->kode}}</td>
-                        <td>{{$value->nama}}</td>
                         <td>
                             <img src="{{ asset('images/foto_iphone/'.$value->foto)}}" width="75px"/>
                         </td>
+                        <td>{{$value->nama}}</td>
                         <td>{{$value->harga}}</td>
                         <td>{{$value->stok}}</td>
-                        <td><a href="{{ url('iphone/' .$value->id)}}" class="btn btn-sm btn-success"><i class="fas fa-eye"></i> Detail</a></td>
-                        <td><a href="{{ url('iphone/' .$value->id .'/edit')}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a></td>
                         <td>
-                            <form action="{{ url('iphone/'.$value->id)}}" id="alert" method="POST">
+                            @can('barang_update')
+                            <a href="{{ url('iphone/' .$value->id .'/edit')}}" style="margin-bottom: 10px" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                            @endcan
+                            @can('barang_delete')
+                            <form action="{{ url('iphone/'.$value->id)}}" role="alert" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-sm btn-danger" type="submit"><i class="fas fa-trash-alt"></i> Delete</button>
                             </form>
+                            @endcan
                         </td>
                     </tr>
                     @endforeach
@@ -61,7 +72,7 @@
 @push('scripts')
 <script>
     $(document).ready(function(){
-           $("#alert").submit(function(event){
+           $("form[role='alert']").submit(function(event){
                event.preventDefault();
                    Swal.fire({
                    title: 'Apakah anda yakin untuk menghapus?',

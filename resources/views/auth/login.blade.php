@@ -3,12 +3,12 @@
 
 @section('content')
     <div class="card-body">
-      <p class="login-box-msg">Sign in untuk masuk website</p>
+      <p class="login-box-msg">Login untuk masuk website</p>
 
       <form method="POST" action="{{ route('login') }}">
         @csrf
         <div class="input-group mb-3">
-          <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Masukkan email atau nama anda">
+          <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Masukkan Email atau Username Anda">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -40,10 +40,10 @@
       </form>
 
       <p class="mb-1">
-        <a href={{ route('password.request') }}>I forgot my password</a>
+        <a href={{ route('password.request') }}>Lupa Password?</a>
       </p>
       <p class="mb-0">
-        <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
+        <a href="{{ route('register') }}" class="text-center">Register user baru</a>
       </p>
     </div>
     <!-- /.card-body -->

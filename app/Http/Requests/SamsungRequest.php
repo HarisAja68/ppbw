@@ -24,7 +24,7 @@ class SamsungRequest extends FormRequest
     public function rules()
     {
         return [
-            'kode' => 'required|unique:tbl_vivo,kode|min:2|max:10',
+            'kode' => 'required|unique:tbl_samsung,kode|min:2|max:10',
             'nama' => 'required',
             'foto' => 'required|mimes:png,jpg',
             'harga' => 'required',

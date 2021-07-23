@@ -24,11 +24,8 @@ class SuppliersController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->keyword;
-        $datas = suppliersModel::where('kode', 'LIKE', '%'.$keyword.'%')
-            ->orWhere('nama', 'LIKE', '%'.$keyword.'%')
-            ->orWhere('barang', 'LIKE', '%'.$keyword.'%')
+        $datas = suppliersModel::Where('nama', 'LIKE', '%'.$keyword.'%')
             ->orWhere('alamat', 'LIKE', '%'.$keyword.'%')
-            ->orWhere('no_hp', 'LIKE', '%'.$keyword.'%')
             ->paginate (5);
         $datas->appends($request->all());
         return view('suppliers.index',compact( 'datas', 'keyword' ));
@@ -72,8 +69,7 @@ class SuppliersController extends Controller
      */
     public function show($id)
     {
-        $model = suppliersModel::find($id);
-        return view('suppliers.show', compact('model'));
+        //
     }
 
     /**
@@ -117,7 +113,7 @@ class SuppliersController extends Controller
     public function destroy($id)
     {
         suppliersModel::destroy($id);
-        return redirect('suppliers')->with('success', "Data Berhasil Diubah");
+        return redirect('suppliers')->with('success', "Data Berhasil Dihapus");
 
     }
 

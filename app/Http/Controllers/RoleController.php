@@ -24,23 +24,10 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        // return view('roles.index',[
-        //     'roles' => Role::all()
-        // ]);
-
         $keyword = $request->keyword;
         $roles = Role::where('name', 'LIKE', '%'.$keyword.'%')->paginate (4);
         $roles->appends($request->all());
         return view('roles.index',compact( 'roles', 'keyword' ));
-    }
-
-    public function select(Request $request)
-    {
-        $roles = Role::select('id', 'name')->limit(2);
-        if ($request->has('q')) {
-            $roles->where('name', 'LIKE', "%{$request->q}%");
-        }
-        return response()->json($roles->get());
     }
 
     /**
@@ -77,11 +64,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-       return view('roles.detail',[
-           'role' => $role,
-           'authorities' => config('permission.authorities'),
-           'rolePermissions' => $role->permissions->pluck('name')->toArray()
-        ]);
+       //
     }
 
     /**

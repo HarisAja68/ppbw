@@ -5,33 +5,30 @@
 <div class="row">
     <div class="col-md-12">
        <div class="card">
-          <form action="{{ route('roles.update', ['role' => $role] )}}" method="POST">
+          <form action="{{ route('roles.update', $role )}}" method="POST">
             @csrf
             @method('PUT')
              <div class="card-body">
                 <div class="form-group">
-                   <label for="input_role_name" class="font-weight-bold">
+                   <label class="font-weight-bold">
                       Role name
                    </label>
-                   <input id="input_role_name" value="{{ old('name', $role->name)}}" name="name" type="text" class="form-control" readonly/>
+                   <input value="{{ old('name', $role->name)}}" name="name" type="text" class="form-control" readonly/>
                     @foreach ($errors->get('name') as $msg)
                         <div class="alert alert-danger">{{$msg}}</div>
                     @endforeach
                 </div>
-                <!-- permission -->
                 <div class="form-group">
-                   <label for="input_role_permission" class="font-weight-bold">
+                   <label class="font-weight-bold">
                       permission
                    </label>
                    <div class="form-control overflow-auto h-100 " id="input_role_permission">
                       <div class="row">
-                         <!-- list manage name:start -->
                          @foreach ($authorities as $manageName => $permissions)
                             <ul class="list-group mx-1">
                                 <li class="list-group-item bg-dark text-white">
                                     {{$manageName}}
                                 </li>
-                                <!-- list permission:start -->
                                 @foreach ($permissions as $permission)
                                 <li class="list-group-item">
                                     <div class="form-check">
@@ -47,11 +44,9 @@
                                         </label>
                                     </div>
                                 </li>
-                                <!-- list permission:end -->
                                 @endforeach
                             </ul>
                          @endforeach
-                         <!-- list manage name:end  -->
                       </div>
                    </div>
                     @foreach ($errors->get('permissions') as $msg)
@@ -60,10 +55,10 @@
                 </div>
                 <div class="float-right mb-4">
                    <a href="{{ route('roles.index')}}" class="btn btn-warning px-4 mx-2">
-                      Back
+                    <i class="fas fa-undo"></i> Kembali
                    </a>
                    <button type="submit" class="btn btn-primary px-4">
-                      Save
+                    <i class="fas fa-save"></i> Simpan
                    </button>
                 </div>
              </div>

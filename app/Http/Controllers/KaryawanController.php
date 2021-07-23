@@ -25,10 +25,8 @@ class KaryawanController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->keyword;
-        $datas = KaryawanModel::where('nip', 'LIKE', '%'.$keyword.'%')
-            ->orWhere('nama', 'LIKE', '%'.$keyword.'%')
+        $datas = KaryawanModel::Where('nama', 'LIKE', '%'.$keyword.'%')
             ->orWhere('alamat', 'LIKE', '%'.$keyword.'%')
-
             ->paginate (5);
         $datas->appends($request->all());
         return view('karyawan.index',compact( 'datas', 'keyword' ));
@@ -67,7 +65,7 @@ class KaryawanController extends Controller
         }
         $model->save();
 
-        return redirect('karyawan')->with('success', "Suksesssss!\nData Berhasil Ditambahkan");
+        return redirect('karyawan')->with('success', "Data Berhasil Ditambahkan");
     }
 
     /**
@@ -78,8 +76,7 @@ class KaryawanController extends Controller
      */
     public function show($id)
     {
-        $model = KaryawanModel::find($id);
-        return view('karyawan.show', compact('model'));
+        //
     }
 
     /**
@@ -121,7 +118,7 @@ class KaryawanController extends Controller
             $model->foto = $nama_file;
         }
         $model->save();
-        return redirect('karyawan')->with('success', "Suksesssss!\nData Berhasil Diubah");
+        return redirect('karyawan')->with('success', "Data Berhasil Diubah");
     }
 
     /**
@@ -139,7 +136,7 @@ class KaryawanController extends Controller
                 File::delete($destination);
             }
         $model->delete();
-        return redirect('karyawan')->with('success', "Suksesssss!\nData Berhasil Dihapus");
+        return redirect('karyawan')->with('success', "Data Berhasil Dihapus");
     }
     public function cetak_karyawan()
     {

@@ -33,7 +33,7 @@
                 <td>{{$value->alamat}}</td>
                 <td>{{$value->no_hp}}</td>
                 <td>
-                    <img src="{{ asset('foto_karyawan/'.$value->foto)}}" width="75px"/>
+                    <img src="{{ asset('images/foto_karyawan/'.$value->foto)}}" width="75px"/>
                 </td>
             </tr>
             @endforeach

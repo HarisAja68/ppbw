@@ -20,47 +20,44 @@
                    </form>
                 </div>
                 <div class="col-md-6">
-                   <a href="{{ route('roles.create')}}" class="btn btn-primary float-right" role="button">
-                      Add new
-                      <i class="fas fa-plus-square"></i>
-                   </a>
+                    @can('role_create')
+                    <a href="{{ route('roles.create')}}" class="btn btn-primary float-right" role="button">
+                        <i class="fas fa-plus"></i> Tambah
+                    </a>
+                    @endcan
                 </div>
              </div>
           </div>
           <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <!-- list role -->
-                    @forelse ($roles as $role)
-                        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center pr-0">
-                            <label class="mt-auto mb-auto">
-                            {{ $role->name}}
-                            </label>
-                            <div>
-                                <!-- detail -->
-                                <a href="{{ route('roles.show', ['role' => $role] )}}" class="btn btn-sm btn-primary" role="button">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <!-- edit -->
-                                <a href="{{ route('roles.edit', ['role' => $role] )}}" class="btn btn-sm btn-warning" role="button">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <!-- delete -->
-                                <form class="d-inline" action="{{ route('roles.destroy', ['role' => $role] )}}" role="alert" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-sm btn-danger" type="submit" ><i class="fas fa-trash-alt"></i></button>
-                                </form>
-                            </div>
-                        </li>
-                    @empty
-                        <p>
-                        <strong>
-                            {{'Data tidak ada'}}
-                        </strong>
-                        </p>
-                    @endforelse
-                    <!-- list role -->
-                </ul>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>NO</th>
+                            <th>Nama Role</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($roles as $key => $role)
+                            <tr>
+                                <td>{{ (($key+1) + ($roles->currentPage() * $roles->perPage()) - $roles->perPage()) }}</td>
+                                <td>{{ $role->name}}</td>
+                                <td>
+                                    @can('role_update')
+                                    <a href="{{ route('roles.edit', $role )}}" class="btn btn-sm btn-warning"><i class="fas fa-edit"> Edit</i></a>
+                                    @endcan
+                                    @can('role_delete')
+                                        <form class="d-inline" action="{{ route('roles.destroy', $role )}}" role="alert" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-danger" type="submit" ><i class="fas fa-trash-alt"></i> Delete</button>
+                                        </form>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
             <div class="card-footer">
                 {{ $roles->links()}}

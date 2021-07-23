@@ -5,13 +5,19 @@
 @section('content')
 <div class="card card-info card-outline">
     <div class="card-header">
-        <form class="card-title" method="GET" action="{{ url('karyawan')}}" enctype="multipart/form-data">
-            <input type="text" name="keyword" value="{{ $keyword}}" placeholder="Search" />
-            <button type="submit" class="btn btn-sm btn-outline-info"><i class="fas fa-search"></i> Search</button>
+        <form class="card-title" method="GET" enctype="multipart/form-data">
+            <div class="input-group">
+                <input type="search" class="form-control" name="keyword" value="{{ $keyword}}" placeholder="Search" />
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">
+                       <i class="fas fa-search"></i>
+                    </button>
+                 </div>
+            </div>
         </form>
         <div class="card-tools">
             @can('karyawan_create')
-                <a href="{{ url('karyawan/create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
+                <a href="{{ route('karyawan.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah</a>
                 <a href="{{ url('cetak_karyawan')}}" target="_blank" class="btn btn-success"><i class="fas fa-print"></i> Cetak Table</a>
             @endcan
         </div>
@@ -22,10 +28,10 @@
                 <tr>
                     <th>NO</th>
                     <th>NIP</th>
+                    <th>Foto</th>
                     <th>Nama Karyawan</th>
                     <th>Alamat</th>
                     <th>No Handphone</th>
-                    <th>Foto</th>
                     <th class="text-center">ACTION</th>
                 </tr>
             </thead>
@@ -34,21 +40,21 @@
                     <tr>
                         <td>{{ (($key+1) + ($datas->currentPage() * $datas->perPage()) - $datas->perPage()) }}</td>
                         <td>{{$value->nip}}</td>
+                        <td>
+                            <img src="{{ asset('images/foto_karyawan/'.$value->foto)}}" width="75px"/>
+                        </td>
                         <td>{{$value->nama}}</td>
                         <td>{{$value->alamat}}</td>
                         <td>{{$value->no_hp}}</td>
                         <td>
-                            <img src="{{ asset('images/foto_karyawan/'.$value->foto)}}" width="75px"/>
-                        </td>
-                        <td class="d-flex justify-content-between">
                             @can('karyawan_update')
-                                <a href="{{ url('karyawan/' .$value->id .'/edit')}}"  class="btn btn-sm btn-warning "><i class="fas fa-edit"></i> Edit</a>
+                            <a href="{{ route('karyawan.edit', $value->id)}}" style="margin-bottom: 10px" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>
                             @endcan
                             @can('karyawan_delete')
-                            <form action="{{ url('karyawan/'.$value->id)}}" role="alert" method="POST" >
+                            <form action="{{ route('karyawan.destroy', $value->id)}}" role="alert" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-sm btn-danger"  type="submit"><i class="fas fa-trash-alt"></i> Delete</button>
+                                <button class="btn btn-sm btn-danger" type="submit" ><i class="fas fa-trash-alt"></i> Delete</button>
                             </form>
                             @endcan
                         </td>

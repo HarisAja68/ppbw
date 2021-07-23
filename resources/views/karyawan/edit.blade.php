@@ -19,6 +19,15 @@
                     @endforeach
                 </div>
                 <div class="form-group">
+                    <label>Foto</label>
+                    <input type="file" name="foto" class="form-control" >
+                    <br>
+                    @foreach ($errors->get('foto') as $msg)
+                    <div class="alert alert-danger">{{$msg}}</div>
+                    @endforeach
+                    <img src="{{ asset('images/foto_karyawan/'.$model->foto)}}" width="100px"/>
+                </div>
+                <div class="form-group">
                     <label>Nama Karyawan</label>
                     <input name="nama" class="form-control" value="{{ $model->nama}}">
                     @foreach ($errors->get('nama') as $msg)
@@ -39,20 +48,11 @@
                     <div class="alert alert-danger">{{$msg}}</div>
                     @endforeach
                 </div>
-                <div class="form-group">
-                    <label>Foto</label>
-                    <input type="file" name="foto" class="form-control" >
-                    <br>
-                    @foreach ($errors->get('foto') as $msg)
-                    <div class="alert alert-danger">{{$msg}}</div>
-                    @endforeach
-                    <img src="{{ asset('images/foto_karyawan/'.$model->foto)}}" width="100px"/>
-                </div>
-                </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
                 </div>
             </div>
         </form>
+    </div>
 </div>
 @endsection
