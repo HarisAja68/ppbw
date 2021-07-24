@@ -61,3 +61,29 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 # ppbw
+### Setup Aplikasi
+Jalankan perintah 
+```bash
+composer update
+```
+atau:
+```bash
+composer install
+```
+
+Generate key
+```bash
+php artisan key:generate
+```
+Migrate database
+```bash
+php artisan migrate
+```
+Seeder table
+```bash
+php artisan db:seed
+```
+Menjalankan aplikasi
+```bash
+php artisan serve
+```
