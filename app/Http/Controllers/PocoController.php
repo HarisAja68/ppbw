@@ -24,12 +24,12 @@ class PocoController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->keyword;
-        $datas = pocoModel::where('kode', 'LIKE', '%'.$keyword.'%')
-            ->orWhere('nama', 'LIKE', '%'.$keyword.'%')
-            ->orWhere('harga', 'LIKE', '%'.$keyword.'%')
-            ->paginate (5);
+        $datas = pocoModel::where('kode', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('nama', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('harga', 'LIKE', '%' . $keyword . '%')
+            ->paginate(5);
         $datas->appends($request->all());
-        return view('barang.xiaomi.poco.index',compact( 'datas', 'keyword' ));
+        return view('barang.xiaomi.poco.index', compact('datas', 'keyword'));
     }
 
     /**
@@ -54,12 +54,11 @@ class PocoController extends Controller
         $model = new pocoModel;
         $model->kode = $request->kode;
         $model->nama = $request->nama;
-        if($request->file("foto"))
-        {
-        $file = $request->file('foto');
-        $nama_file = time().str_replace(" ", "", $file->getClientOriginalName());
-        $file->move('images/foto_poco', $nama_file);
-        $model->foto = $nama_file;
+        if ($request->file("foto")) {
+            $file = $request->file('foto');
+            $nama_file = time() . str_replace(" ", "", $file->getClientOriginalName());
+            $file->move('images/foto_poco', $nama_file);
+            $model->foto = $nama_file;
         }
         $model->harga = $request->harga;
         $model->stok = $request->stok;
@@ -104,15 +103,13 @@ class PocoController extends Controller
         $model = pocoModel::find($id);
         $model->kode = $request->kode;
         $model->nama = $request->nama;
-        if($request->hasfile("foto"))
-        {
-            $destination = 'images/foto_poco/'. $model->foto;
-            if (File::exists($destination))
-            {
+        if ($request->hasfile("foto")) {
+            $destination = 'images/foto_poco/' . $model->foto;
+            if (File::exists($destination)) {
                 File::delete($destination);
             }
             $file = $request->file('foto');
-            $nama_file = time().str_replace(" ", "", $file->getClientOriginalName());
+            $nama_file = time() . str_replace(" ", "", $file->getClientOriginalName());
             $file->move('images/foto_poco', $nama_file);
             $model->foto = $nama_file;
         }
@@ -133,9 +130,8 @@ class PocoController extends Controller
     public function destroy($id)
     {
         $model = pocoModel::find($id);
-        $destination = 'images/foto_poco/'. $model->foto;
-        if (File::exists($destination))
-        {
+        $destination = 'images/foto_poco/' . $model->foto;
+        if (File::exists($destination)) {
             File::delete($destination);
         }
         $model->delete();
@@ -144,6 +140,6 @@ class PocoController extends Controller
     public function cetak_poco()
     {
         $datas = pocoModel::get();
-        return view('barang.xiaomi.poco.cetak',compact('datas'));
+        return view('barang.xiaomi.poco.cetak', compact('datas'));
     }
 }

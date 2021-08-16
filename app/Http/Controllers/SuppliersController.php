@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SuppliersExport;
 use Illuminate\Http\Request;
 use App\Models\suppliersModel;
 use App\Http\Requests\SuppliersRequest;
-use Illuminate\Database\Eloquent\Model;
+use App\Imports\SuppliersImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SuppliersController extends Controller
 {
@@ -24,11 +26,11 @@ class SuppliersController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->keyword;
-        $datas = suppliersModel::Where('nama', 'LIKE', '%'.$keyword.'%')
-            ->orWhere('alamat', 'LIKE', '%'.$keyword.'%')
-            ->paginate (5);
+        $datas = suppliersModel::Where('nama', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('alamat', 'LIKE', '%' . $keyword . '%')
+            ->paginate(5);
         $datas->appends($request->all());
-        return view('suppliers.index',compact( 'datas', 'keyword' ));
+        return view('suppliers.index', compact('datas', 'keyword'));
     }
 
     /**
@@ -38,8 +40,8 @@ class SuppliersController extends Controller
      */
     public function create()
     {
-       $model = new suppliersModel;
-       return view('suppliers.create', compact('model'));
+        $model = new suppliersModel;
+        return view('suppliers.create', compact('model'));
     }
 
     /**
@@ -114,12 +116,26 @@ class SuppliersController extends Controller
     {
         suppliersModel::destroy($id);
         return redirect('suppliers')->with('success', "Data Berhasil Dihapus");
-
     }
 
     public function cetak_suppliers()
     {
         $datas = suppliersModel::get();
-        return view('suppliers.cetak',compact('datas'));
+        return view('suppliers.cetak', compact('datas'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new SuppliersExport, 'Suppliers.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $file = $request->file('file');
+        $namaFile = str_replace(" ", "", $file->getClientOriginalName());
+        $file->move('data', $namaFile);
+
+        Excel::import(new SuppliersImport, public_path('/data', $namaFile));
+        return redirect('suppliers');
     }
 }
